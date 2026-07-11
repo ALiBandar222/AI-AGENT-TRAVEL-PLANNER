@@ -98,12 +98,18 @@
   gap: 8px;
   padding: 10px 12px;
   margin-bottom: 12px;
-  border: 1px solid #f59e0b;
-  border-radius: 8px;
-  background: rgba(245, 158, 11, 0.1);
-  color: #92400e;
+  border-radius: 10px;
   font-size: 13px;
   line-height: 1.4;
+  color: #92400e;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+
+.auth-warning--info {
+  color: #1e4d6b;
+  background: rgba(3, 105, 161, 0.08);
+  border-color: rgba(3, 105, 161, 0.25);
 }
 
 .auth-warning code {
@@ -207,6 +213,19 @@
   font-weight: 500;
 }
 
+.dashboard-stats {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0369a1;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(3, 105, 161, 0.1);
+  border: 1px solid rgba(3, 105, 161, 0.2);
+}
+
 .logout-button {
   display: flex;
   align-items: center;
@@ -235,6 +254,17 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.chat-readonly-banner {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  color: #1e4d6b;
+  background: rgba(3, 105, 161, 0.08);
+  border-bottom: 1px solid rgba(3, 105, 161, 0.15);
 }
 
 .chat-messages {
@@ -366,6 +396,13 @@
   color: var(--accent);
   margin-top: 4px;
   font-style: italic;
+}
+
+.msg-token-usage {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #7ba7c0;
+  font-family: var(--mono);
 }
 
 .email-ask-buttons {
@@ -689,8 +726,32 @@
   font-size: 13px;
   color: #1e4d6b;
   text-align: center;
-  padding: 20px 0;
-  opacity: 0.6;
+  padding: 12px 8px;
+}
+
+.sidebar-section-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1e4d6b;
+  padding: 8px 6px 4px;
+  opacity: 0.75;
+}
+
+.sidebar-item--server .sidebar-item-body {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.sidebar-item-date {
+  font-size: 10px;
+  color: #7ba7c0;
+  font-weight: 400;
 }
 
 .sidebar-item {

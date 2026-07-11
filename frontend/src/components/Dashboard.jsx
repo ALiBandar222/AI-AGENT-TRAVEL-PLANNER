@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMe, clearToken, getUserStats } from "../api";
+import { getMe, clearToken, getUserStats, getAgentHistory } from "../api";
 import { LogOut, MapPin, BarChart3, Menu } from "lucide-react";
 import ChatPanel from "./ChatPanel";
 import Sidebar from "./Sidebar";
@@ -20,8 +20,38 @@ function persistSessions(sessions) {
   );
 }
 
+function serverRunToSession(run) {
+  return {
+    id: `server-${run.id}`,
+    title: run.query.slice(0, 40),
+    messages: [
+      { role: "user", content: run.query },
+      {
+        role: "agent",
+        content: run.response,
+        toolLogs: [],
+        streaming: false,
+        tokenUsage: {
+          prompt_tokens: run.prompt_tokens,
+          completion_tokens: run.completion_tokens,
+        },
+      },
+    ],
+    chatHistory: [
+      { role: "user", content: run.query },
+      { role: "assistant", content: run.response },
+    ],
+    originCountry: null,
+    ts: run.created_at ? new Date(run.created_at).getTime() : Date.now(),
+    readonly: true,
+    serverRunId: run.id,
+  };
+}
+
 export default function Dashboard() {
   const [user, setUser] = useState(null);
+  const [stats, setStats] = useState(null);
+  const [serverRuns, setServerRuns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sessions, setSessions] = useState(loadSessions);
@@ -31,8 +61,14 @@ export default function Dashboard() {
   useEffect(() => {
     async function load() {
       try {
-        const me = await getMe();
+        const [me, userStats, history] = await Promise.all([
+          getMe(),
+          getUserStats(),
+          getAgentHistory(),
+        ]);
         setUser(me);
+        setStats(userStats);
+        setServerRuns(history);
       } catch {
         clearToken();
         navigate("/login", { replace: true });
@@ -57,7 +93,13 @@ export default function Dashboard() {
     setSidebarOpen(false);
   }
 
+  function selectServerRun(run) {
+    setActiveId(`server-${run.id}`);
+    setSidebarOpen(false);
+  }
+
   function deleteSession(id) {
+    if (id.startsWith("server-")) return;
     setSessions((prev) => {
       const updated = prev.filter((s) => s.id !== id);
       persistSessions(updated);
@@ -67,6 +109,7 @@ export default function Dashboard() {
   }
 
   function saveSession(session) {
+    let isNew = false;
     setSessions((prev) => {
       const idx = prev.findIndex((s) => s.id === session.id);
       let updated;
@@ -75,14 +118,26 @@ export default function Dashboard() {
         updated[idx] = session;
       } else {
         updated = [session, ...prev];
+        isNew = true;
       }
       persistSessions(updated);
       return updated;
     });
     setActiveId(session.id);
+    if (isNew) {
+      setStats((prev) =>
+        prev ? { ...prev, agent_runs: (prev.agent_runs || 0) + 1 } : prev
+      );
+    }
   }
 
-  const activeSession = sessions.find((s) => s.id === activeId) || null;
+  const activeSession =
+    sessions.find((s) => s.id === activeId) ||
+    (activeId?.startsWith("server-")
+      ? serverRuns
+          .map(serverRunToSession)
+          .find((s) => s.id === activeId) || null
+      : null);
 
   if (loading) {
     return (
@@ -109,6 +164,12 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="dashboard-user-bar">
+          {stats && (
+            <span className="dashboard-stats" title="Total agent runs">
+              <BarChart3 size={14} />
+              {stats.agent_runs} run{stats.agent_runs !== 1 ? "s" : ""}
+            </span>
+          )}
           <span className="dashboard-email">{user?.email}</span>
           <button onClick={handleLogout} className="logout-button">
             <LogOut size={16} />
@@ -121,8 +182,10 @@ export default function Dashboard() {
         <Sidebar
           open={sidebarOpen}
           sessions={sessions}
+          serverRuns={serverRuns}
           activeId={activeId}
           onSelect={selectSession}
+          onSelectServerRun={selectServerRun}
           onNew={startNewChat}
           onDelete={deleteSession}
         />

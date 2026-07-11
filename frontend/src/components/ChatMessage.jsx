@@ -50,6 +50,14 @@ export default function ChatMessage({ message, onEmailYes, onEmailNo }) {
         {message.toolLogs && message.toolLogs.length > 0 && (
           <ToolLogPanel tools={message.toolLogs} />
         )}
+        {message.tokenUsage &&
+          (message.tokenUsage.prompt_tokens > 0 ||
+            message.tokenUsage.completion_tokens > 0) && (
+          <div className="msg-token-usage">
+            Tokens: {message.tokenUsage.prompt_tokens} prompt +{" "}
+            {message.tokenUsage.completion_tokens} completion
+          </div>
+        )}
       </div>
     </div>
   );

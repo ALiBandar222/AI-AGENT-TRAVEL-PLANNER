@@ -1,6 +1,21 @@
-import { SquarePen, MessageSquare, Trash2 } from "lucide-react";
+import { SquarePen, MessageSquare, Trash2, History } from "lucide-react";
 
-export default function Sidebar({ open, sessions, activeId, onSelect, onNew, onDelete }) {
+function formatDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+export default function Sidebar({
+  open,
+  sessions,
+  serverRuns,
+  activeId,
+  onSelect,
+  onSelectServerRun,
+  onNew,
+  onDelete,
+}) {
   return (
     <aside className={`sidebar ${open ? "sidebar--open" : ""}`}>
       <div className="sidebar-inner">
@@ -9,9 +24,10 @@ export default function Sidebar({ open, sessions, activeId, onSelect, onNew, onD
           New Chat
         </button>
 
+        <div className="sidebar-section-label">Your chats</div>
         <div className="sidebar-list">
           {sessions.length === 0 && (
-            <p className="sidebar-empty">No chats yet</p>
+            <p className="sidebar-empty">No local chats yet</p>
           )}
           {sessions.map((s) => (
             <div
@@ -36,6 +52,42 @@ export default function Sidebar({ open, sessions, activeId, onSelect, onNew, onD
             </div>
           ))}
         </div>
+
+        {serverRuns.length > 0 && (
+          <>
+            <div className="sidebar-section-label">
+              <History size={12} />
+              Server history
+            </div>
+            <div className="sidebar-list">
+              {serverRuns.map((run) => {
+                const id = `server-${run.id}`;
+                return (
+                  <div
+                    key={id}
+                    className={`sidebar-item sidebar-item--server ${id === activeId ? "sidebar-item--active" : ""}`}
+                  >
+                    <button
+                      className="sidebar-item-body"
+                      onClick={() => onSelectServerRun(run)}
+                    >
+                      <History size={14} className="sidebar-item-icon" />
+                      <span className="sidebar-item-title">
+                        {run.query.slice(0, 36)}
+                        {run.query.length > 36 ? "…" : ""}
+                      </span>
+                      {run.created_at && (
+                        <span className="sidebar-item-date">
+                          {formatDate(run.created_at)}
+                        </span>
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </aside>
   );

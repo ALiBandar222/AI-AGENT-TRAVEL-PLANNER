@@ -9,10 +9,14 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [backendOk, setBackendOk] = useState(true);
+  const [healthStatus, setHealthStatus] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkBackendHealth().then((health) => setBackendOk(health !== null));
+    checkBackendHealth().then((health) => {
+      setBackendOk(health !== null);
+      setHealthStatus(health);
+    });
   }, []);
 
   async function handleSubmit(e) {
@@ -44,6 +48,17 @@ export default function LoginPage() {
             <span>
               Backend seems unreachable at http://localhost:8000 — make sure
               it's running, then try again.
+            </span>
+          </div>
+        )}
+
+        {backendOk && healthStatus?.status === "degraded" && (
+          <div className="auth-warning auth-warning--info">
+            <AlertTriangle size={16} />
+            <span>
+              Backend is running but some services are degraded
+              (ML: {healthStatus.ml_model}, LLM: {healthStatus.llm}).
+              Chat may still work with limited features.
             </span>
           </div>
         )}

@@ -6,6 +6,7 @@ import ChatMessage from "./ChatMessage";
 
 export default function ChatPanel({ initialState, onSave }) {
   const navigate = useNavigate();
+  const readonly = initialState?.readonly || false;
 
   const [messages, setMessages] = useState(initialState?.messages || []);
   const [input, setInput] = useState("");
@@ -128,10 +129,14 @@ export default function ChatPanel({ initialState, onSave }) {
         } else if (event.type === "final") {
           agentResponse = event.data.response;
           const finalLogs = event.data.tool_logs || toolLogs;
+          const tokenUsage = {
+            prompt_tokens: event.data.prompt_tokens,
+            completion_tokens: event.data.completion_tokens,
+          };
           setMessages((prev) => {
             const updated = [
               ...prev.filter((m) => m.role !== "thinking" && !(m.role === "agent" && m.streaming)),
-              { role: "agent", content: agentResponse, toolLogs: finalLogs, streaming: false },
+              { role: "agent", content: agentResponse, toolLogs: finalLogs, streaming: false, tokenUsage },
             ];
             // persist session after state settles
             const newHistory = [
@@ -239,6 +244,11 @@ export default function ChatPanel({ initialState, onSave }) {
 
   return (
     <div className="chat-panel">
+      {readonly && (
+        <div className="chat-readonly-banner">
+          Viewing a past run from the server — read only
+        </div>
+      )}
       <div className="chat-messages">
         {messages.length === 0 && (
           <div className="chat-empty">
@@ -269,7 +279,7 @@ export default function ChatPanel({ initialState, onSave }) {
         <div ref={bottomRef} />
       </div>
 
-      {pendingEmail && messages.some((m) => m.emailAccepted) ? (
+      {!readonly && pendingEmail && messages.some((m) => m.emailAccepted) ? (
         <form onSubmit={handleEmailSubmit} className="chat-input-bar">
           <input
             type="email"
@@ -288,7 +298,7 @@ export default function ChatPanel({ initialState, onSave }) {
             {emailLoading ? <Loader2 size={18} className="spin" /> : <Send size={18} />}
           </button>
         </form>
-      ) : (
+      ) : !readonly ? (
         <form onSubmit={handleSend} className="chat-input-bar">
           <input
             type="text"
@@ -307,7 +317,7 @@ export default function ChatPanel({ initialState, onSave }) {
             {loading ? <Square size={18} /> : <Send size={18} />}
           </button>
         </form>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function ToolLogPanel({ tools }) {
               {t.status === "running" && <Loader2 size={10} className="spin" />}
               {t.status === "success" && <Check size={10} />}
               {t.status === "error" && <X size={10} />}
-              {t.tool_name.replace("_", " ")}
+              {t.tool_name.replace(/_/g, " ")}
             </span>
           ))}
         </span>

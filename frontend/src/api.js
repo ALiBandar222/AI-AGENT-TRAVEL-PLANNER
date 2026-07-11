@@ -104,6 +104,10 @@ export async function getUserStats() {
   return apiFetch("/user/stats");
 }
 
+export async function getAgentHistory() {
+  return apiFetch("/agent/history");
+}
+
 export async function sendPlanEmail(email, plan, destination) {
   return apiFetch("/agent/send-email", {
     method: "POST",
