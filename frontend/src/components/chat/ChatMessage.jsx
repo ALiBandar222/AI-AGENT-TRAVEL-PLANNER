@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { User, Bot, ChevronDown, ChevronRight, Mail } from "lucide-react";
+import { User, Bot, Mail } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import ToolLogPanel from "./ToolLogPanel";
+import ExportPlanButton from "./ExportPlanButton";
 
-export default function ChatMessage({ message, onEmailYes, onEmailNo }) {
+export default function ChatMessage({ message, onEmailYes, onEmailNo, destination }) {
   const isUser = message.role === "user";
   const isThinking = message.role === "thinking";
 
@@ -15,6 +15,14 @@ export default function ChatMessage({ message, onEmailYes, onEmailNo }) {
       </div>
     );
   }
+
+  const showExport =
+    !isUser &&
+    message.content &&
+    !message.streaming &&
+    !message.isQuestion &&
+    !message.isEmailAsk &&
+    message.content.length > 100;
 
   return (
     <div className={`chat-msg ${isUser ? "user" : "agent"}`}>
@@ -57,6 +65,9 @@ export default function ChatMessage({ message, onEmailYes, onEmailNo }) {
             Tokens: {message.tokenUsage.prompt_tokens} prompt +{" "}
             {message.tokenUsage.completion_tokens} completion
           </div>
+        )}
+        {showExport && (
+          <ExportPlanButton plan={message.content} destination={destination} />
         )}
       </div>
     </div>

@@ -1,10 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./components/LoginPage";
-import SignupPage from "./components/SignupPage";
-import Dashboard from "./components/Dashboard";
-import AuthGuard from "./components/AuthGuard";
-import LandingPage from "./components/LandingPage";
+import LoginPage from "./components/auth/LoginPage";
+import SignupPage from "./components/auth/SignupPage";
+import Dashboard from "./pages/Dashboard";
+import AuthGuard from "./components/auth/AuthGuard";
+import LandingPage from "./pages/LandingPage";
 import "./App.css";
+import "./styles/extended.css";
 
 export default function App() {
   return (

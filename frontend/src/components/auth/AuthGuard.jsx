@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { getToken } from "../api";
+import { getToken } from "../../api";
 
 export default function AuthGuard({ children }) {
   if (!getToken()) {

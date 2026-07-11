@@ -6,10 +6,7 @@ export default function ToolLogPanel({ tools }) {
 
   return (
     <div className="tool-log-panel">
-      <button
-        className="tool-log-toggle"
-        onClick={() => setExpanded(!expanded)}
-      >
+      <button className="tool-log-toggle" onClick={() => setExpanded(!expanded)}>
         {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         <span>{tools.length} tool{tools.length !== 1 ? "s" : ""} used</span>
         <span className="tool-log-summary">
@@ -33,9 +30,7 @@ export default function ToolLogPanel({ tools }) {
                 {t.latency_ms != null && (
                   <span className="tool-latency">{t.latency_ms}ms</span>
                 )}
-                <span className={`tool-status-badge ${t.status}`}>
-                  {t.status}
-                </span>
+                <span className={`tool-status-badge ${t.status}`}>{t.status}</span>
               </div>
               {t.input_payload && (
                 <div className="tool-log-section">

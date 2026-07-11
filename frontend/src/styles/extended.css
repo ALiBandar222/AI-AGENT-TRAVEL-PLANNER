@@ -1,0 +1,962 @@
+/* ── Extended Frontend Styles (Ali Bandar) ─────────────── */
+/* Landing sections, dashboard panels, chat welcome, etc.  */
+
+/* ── Section headers ─────────────────────────────────── */
+
+.landing-section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 36px;
+  padding: 0 24px;
+}
+
+.landing-section-header h2 {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 12px;
+}
+
+.landing-section-header p {
+  font-size: 16px;
+  color: #1e4d6b;
+  line-height: 1.6;
+}
+
+/* ── Stats banner ──────────────────────────────────────── */
+
+.landing-stats-banner {
+  padding: 40px 32px;
+  background: rgba(255, 255, 255, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.stats-banner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stats-banner-item {
+  padding: 16px;
+}
+
+.stats-banner-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0369a1;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stats-banner-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0c2d48;
+}
+
+.stats-banner-sub {
+  font-size: 12px;
+  color: #1e4d6b;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* ── How it works flow ───────────────────────────────── */
+
+.landing-how-it-works {
+  padding: 64px 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+  padding: 20px 0;
+}
+
+.flow-step-number {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0369a1, #0891b2);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.3);
+}
+
+.flow-step-connector {
+  display: none;
+}
+
+.flow-step-content {
+  flex: 1;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+}
+
+.flow-step-content h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 4px;
+}
+
+.flow-step-model {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #0369a1;
+  background: rgba(3, 105, 161, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.flow-step-content p {
+  font-size: 14px;
+  color: #1e4d6b;
+  line-height: 1.5;
+}
+
+/* ── Tools showcase ──────────────────────────────────── */
+
+.landing-tools {
+  padding: 64px 32px;
+  background: rgba(255, 255, 255, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.tool-card-icon {
+  margin-bottom: 12px;
+}
+
+.tool-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 8px;
+}
+
+.tool-card-desc {
+  font-size: 13px;
+  color: #1e4d6b;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.tool-card-meta {
+  font-size: 12px;
+  color: #1e4d6b;
+  line-height: 1.5;
+  border-top: 1px solid rgba(3, 105, 161, 0.1);
+  padding-top: 10px;
+}
+
+.tool-card-when,
+.tool-card-source {
+  margin-bottom: 4px;
+}
+
+.tool-card-meta strong {
+  color: #0369a1;
+}
+
+/* ── Destination grid ────────────────────────────────── */
+
+.landing-destinations {
+  padding: 64px 32px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.destination-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.destination-filter {
+  padding: 6px 14px;
+  border: 1.5px solid rgba(3, 105, 161, 0.2);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #1e4d6b;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.destination-filter:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: #0369a1;
+}
+
+.destination-filter--active {
+  background: linear-gradient(135deg, #0369a1, #0891b2);
+  color: #fff;
+  border-color: transparent;
+}
+
+.destination-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.destination-card {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.destination-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card-header {
+  padding: 20px 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.destination-emoji {
+  font-size: 28px;
+}
+
+.destination-style {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.destination-card-body {
+  padding: 12px 16px 16px;
+}
+
+.destination-card-body h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 2px;
+}
+
+.destination-country {
+  font-size: 11px;
+  color: #7ba7c0;
+  margin-bottom: 6px;
+}
+
+.destination-tagline {
+  font-size: 12px;
+  color: #1e4d6b;
+  line-height: 1.4;
+}
+
+/* ── Tech stack ──────────────────────────────────────── */
+
+.landing-tech {
+  padding: 64px 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tech-stack-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.tech-stack-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.tech-stack-role {
+  font-size: 11px;
+  color: #1e4d6b;
+}
+
+/* ── Landing footer ──────────────────────────────────── */
+
+.landing-footer {
+  padding: 48px 32px 32px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.landing-footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #0c2d48;
+  margin-bottom: 8px;
+}
+
+.landing-footer-tagline {
+  font-size: 14px;
+  color: #1e4d6b;
+  max-width: 400px;
+  margin: 0 auto 20px;
+  line-height: 1.5;
+}
+
+.landing-footer-cta {
+  margin-bottom: 24px;
+}
+
+.landing-footer-copy {
+  font-size: 12px;
+  color: #7ba7c0;
+}
+
+.landing-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.landing-nav-link--primary {
+  background: linear-gradient(135deg, #0369a1, #0891b2) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* ── Chat welcome screen ─────────────────────────────── */
+
+.chat-welcome {
+  margin: auto;
+  max-width: 720px;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.chat-welcome-header {
+  margin-bottom: 32px;
+}
+
+.chat-welcome-icon {
+  color: #0369a1;
+  margin-bottom: 12px;
+}
+
+.chat-welcome-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 8px;
+}
+
+.chat-welcome-header p {
+  font-size: 14px;
+  color: #1e4d6b;
+  line-height: 1.6;
+}
+
+.chat-welcome-section {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.chat-welcome-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 12px;
+}
+
+.prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.prompt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(3, 105, 161, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.prompt-card:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #0369a1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.12);
+}
+
+.prompt-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.prompt-text {
+  font-size: 12px;
+  color: #1e4d6b;
+  line-height: 1.4;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.quick-action-chip {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0369a1;
+  background: rgba(3, 105, 161, 0.08);
+  border: 1px solid rgba(3, 105, 161, 0.15);
+}
+
+.chat-welcome-hint {
+  font-size: 12px;
+  color: #7ba7c0;
+  font-style: italic;
+}
+
+/* ── Export plan buttons ─────────────────────────────── */
+
+.export-plan-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(3, 105, 161, 0.1);
+}
+
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1px solid rgba(3, 105, 161, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #0369a1;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.export-btn:hover {
+  background: rgba(3, 105, 161, 0.08);
+  border-color: #0369a1;
+}
+
+/* ── Stats panel (dashboard sidebar) ─────────────────── */
+
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.stats-panel {
+  width: 240px;
+  flex-shrink: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 16px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0c2d48;
+}
+
+.stats-panel-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #1e4d6b;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-card {
+  padding: 12px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.stat-icon {
+  color: #0369a1;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0c2d48;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #7ba7c0;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.stats-recent h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 8px;
+}
+
+.stats-recent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stats-recent li {
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+}
+
+.stats-recent-query {
+  display: block;
+  color: #0c2d48;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.stats-recent-date {
+  color: #7ba7c0;
+  font-size: 10px;
+}
+
+.stats-toggle-btn {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0369a1, #0891b2);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.35);
+  z-index: 50;
+  transition: transform 0.15s;
+}
+
+.stats-toggle-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Profile drawer ──────────────────────────────────── */
+
+.profile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-drawer {
+  width: 320px;
+  max-width: 90vw;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.2s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.profile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(3, 105, 161, 0.1);
+}
+
+.profile-drawer-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0c2d48;
+}
+
+.profile-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #1e4d6b;
+  cursor: pointer;
+}
+
+.profile-drawer-close:hover {
+  background: rgba(3, 105, 161, 0.08);
+}
+
+.profile-drawer-body {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0369a1, #0891b2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+}
+
+.profile-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(3, 105, 161, 0.04);
+}
+
+.profile-field svg {
+  color: #0369a1;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.profile-field-label {
+  display: block;
+  font-size: 11px;
+  color: #7ba7c0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.profile-field-value {
+  font-size: 14px;
+  color: #0c2d48;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.profile-about {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(3, 105, 161, 0.1);
+}
+
+.profile-about h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0c2d48;
+  margin-bottom: 8px;
+}
+
+.profile-about p {
+  font-size: 13px;
+  color: #1e4d6b;
+  line-height: 1.5;
+}
+
+/* ── Backend status badge ────────────────────────────── */
+
+.backend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.backend-badge--ok {
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.1);
+}
+
+.backend-badge--degraded {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+}
+
+.backend-badge--offline {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+}
+
+.backend-badge--loading {
+  color: #7ba7c0;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(3, 105, 161, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #0369a1;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.profile-btn:hover {
+  background: rgba(3, 105, 161, 0.08);
+  border-color: #0369a1;
+}
+
+/* ── Loading spinner ─────────────────────────────────── */
+
+.loading-spinner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #1e4d6b;
+  font-size: 14px;
+}
+
+/* ── Responsive: hide stats panel on mobile ──────────── */
+
+@media (max-width: 1024px) {
+  .stats-panel {
+    display: none;
+  }
+
+  .stats-toggle-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-features {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prompt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .landing-nav-actions {
+    gap: 6px;
+  }
+
+  .landing-nav-link {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-banner-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-hero {
+    padding: 60px 16px 40px;
+  }
+
+  .landing-how-it-works,
+  .landing-tools,
+  .landing-destinations,
+  .landing-tech {
+    padding: 40px 16px;
+  }
+}
+
+/* ── Dark mode overrides for new components ──────────── */
+
+@media (prefers-color-scheme: dark) {
+  .landing-section-header h2,
+  .flow-step-content h3,
+  .tool-card h3,
+  .destination-card-body h3,
+  .chat-welcome-header h2,
+  .stats-panel-title,
+  .profile-drawer-header h2 {
+    color: #e0f2fe;
+  }
+
+  .landing-section-header p,
+  .flow-step-content p,
+  .tool-card-desc,
+  .destination-tagline,
+  .chat-welcome-header p {
+    color: #94a3b8;
+  }
+
+  .tool-card,
+  .destination-card,
+  .flow-step-content,
+  .prompt-card,
+  .stat-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .profile-drawer {
+    background: rgba(22, 23, 29, 0.95);
+  }
+}

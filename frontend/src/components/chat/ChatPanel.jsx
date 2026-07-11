@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Send, Square, Loader2 } from "lucide-react";
-import { sendChat, sendPlanEmail, getToken } from "../api";
+import { sendChat, sendPlanEmail } from "../../api";
 import ChatMessage from "./ChatMessage";
+import ChatWelcome from "./ChatWelcome";
+import { createSessionTitle } from "../../utils/chatSessions";
 
 export default function ChatPanel({ initialState, onSave }) {
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ export default function ChatPanel({ initialState, onSave }) {
   const [pendingQuestion, setPendingQuestion] = useState(null);
   const [originCountry, setOriginCountry] = useState(initialState?.originCountry || null);
   const [chatHistory, setChatHistory] = useState(initialState?.chatHistory || []);
+  const [destination, setDestination] = useState("");
   const sessionIdRef = useRef(initialState?.id || null);
 
   const [pendingEmail, setPendingEmail] = useState(null);
@@ -30,6 +33,10 @@ export default function ChatPanel({ initialState, onSave }) {
 
   function handleStop() {
     abortRef.current?.abort();
+  }
+
+  function handlePromptSelect(text) {
+    setInput(text);
   }
 
   async function handleSend(e) {
@@ -138,20 +145,15 @@ export default function ChatPanel({ initialState, onSave }) {
               ...prev.filter((m) => m.role !== "thinking" && !(m.role === "agent" && m.streaming)),
               { role: "agent", content: agentResponse, toolLogs: finalLogs, streaming: false, tokenUsage },
             ];
-            // persist session after state settles
             const newHistory = [
               ...chatHistory,
               { role: "user", content: text },
               { role: "assistant", content: agentResponse },
             ];
             if (!sessionIdRef.current) sessionIdRef.current = Date.now().toString();
-            const firstUserMsg = updated.find((m) => m.role === "user");
-            const title = firstUserMsg
-              ? firstUserMsg.content.slice(0, 40)
-              : "Untitled chat";
             onSave?.({
               id: sessionIdRef.current,
-              title,
+              title: createSessionTitle(updated),
               messages: updated,
               chatHistory: newHistory,
               originCountry: originForThisRequest,
@@ -163,6 +165,7 @@ export default function ChatPanel({ initialState, onSave }) {
         } else if (event.type === "ask_email") {
           emailAskData = event.data;
           setLastPlan({ plan: event.data.plan, destination: event.data.destination || "" });
+          setDestination(event.data.destination || "");
         }
       }, abortRef.current.signal);
 
@@ -179,6 +182,7 @@ export default function ChatPanel({ initialState, onSave }) {
         ]);
       } else if (agentResponse && emailAskData) {
         setPendingEmail({ plan: emailAskData.plan, destination: emailAskData.destination || "" });
+        setDestination(emailAskData.destination || "");
         setMessages((prev) => [
           ...prev,
           {
@@ -250,18 +254,14 @@ export default function ChatPanel({ initialState, onSave }) {
         </div>
       )}
       <div className="chat-messages">
-        {messages.length === 0 && (
-          <div className="chat-empty">
-            <p>Ask me anything about travel destinations!</p>
-            <p className="chat-hint">
-              Try: "Plan a trip to Bali" or "What's the weather in Paris?"
-            </p>
-          </div>
+        {messages.length === 0 && !readonly && (
+          <ChatWelcome onSelectPrompt={handlePromptSelect} />
         )}
         {messages.map((msg, i) => (
           <ChatMessage
             key={i}
             message={msg}
+            destination={destination}
             onEmailYes={() => {
               setMessages((prev) =>
                 prev.map((m) => (m.isEmailAsk ? { ...m, isEmailAsk: false, emailAccepted: true } : m))
@@ -290,11 +290,7 @@ export default function ChatPanel({ initialState, onSave }) {
             className="chat-input"
             autoFocus
           />
-          <button
-            type="submit"
-            disabled={emailLoading || !emailInput.trim()}
-            className="chat-send"
-          >
+          <button type="submit" disabled={emailLoading || !emailInput.trim()} className="chat-send">
             {emailLoading ? <Loader2 size={18} className="spin" /> : <Send size={18} />}
           </button>
         </form>

@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { signup, checkBackendHealth } from "../api";
-import { UserPlus, AlertTriangle } from "lucide-react";
+import { signup } from "../../api";
+import { UserPlus } from "lucide-react";
+import BackendWarning from "../common/BackendWarning";
+import { useBackendHealth } from "../../hooks/useBackendHealth";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -9,16 +11,8 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [backendOk, setBackendOk] = useState(true);
-  const [healthStatus, setHealthStatus] = useState(null);
+  const { health, loading: healthLoading } = useBackendHealth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    checkBackendHealth().then((health) => {
-      setBackendOk(health !== null);
-      setHealthStatus(health);
-    });
-  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -54,26 +48,7 @@ export default function SignupPage() {
           <p>Sign up to start planning your trips</p>
         </div>
 
-        {!backendOk && (
-          <div className="auth-warning">
-            <AlertTriangle size={16} />
-            <span>
-              Backend seems unreachable at http://localhost:8000 — make sure
-              it's running, then try again.
-            </span>
-          </div>
-        )}
-
-        {backendOk && healthStatus?.status === "degraded" && (
-          <div className="auth-warning auth-warning--info">
-            <AlertTriangle size={16} />
-            <span>
-              Backend is running but some services are degraded
-              (ML: {healthStatus.ml_model}, LLM: {healthStatus.llm}).
-              Chat may still work with limited features.
-            </span>
-          </div>
-        )}
+        <BackendWarning health={health} loading={healthLoading} />
 
         <form onSubmit={handleSubmit} className="auth-form">
           <label>

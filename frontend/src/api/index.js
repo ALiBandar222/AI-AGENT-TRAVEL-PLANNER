@@ -1,6 +1,6 @@
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
+import { TOKEN_KEY } from "../constants/storage";
 
-const TOKEN_KEY = "travel_planner_token";
+export const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -14,12 +14,14 @@ export function clearToken() {
   localStorage.removeItem(TOKEN_KEY);
 }
 
+export function isAuthenticated() {
+  return Boolean(getToken());
+}
+
 function authHeaders() {
   const token = getToken();
   const headers = { "Content-Type": "application/json" };
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
+  if (token) headers.Authorization = `Bearer ${token}`;
   return headers;
 }
 
@@ -28,15 +30,11 @@ async function apiFetch(path, options = {}) {
   try {
     res = await fetch(`${API_BASE}${path}`, {
       ...options,
-      headers: {
-        ...authHeaders(),
-        ...options.headers,
-      },
+      headers: { ...authHeaders(), ...options.headers },
     });
   } catch {
     throw new Error(
-      "Cannot reach the server. Make sure the backend is running at " +
-        API_BASE
+      `Cannot reach the server. Make sure the backend is running at ${API_BASE}`
     );
   }
 
@@ -71,8 +69,7 @@ async function apiFetch(path, options = {}) {
 export async function checkBackendHealth() {
   try {
     const res = await fetch(`${API_BASE}/health`, { method: "GET" });
-    const data = await res.json();
-    return data;
+    return await res.json();
   } catch {
     return null;
   }
@@ -115,14 +112,16 @@ export async function sendPlanEmail(email, plan, destination) {
   });
 }
 
+/**
+ * Parse SSE stream from POST /agent/chat.
+ * Events: thinking, tool_start, tool_result, token, needs_input, final, ask_email
+ */
 export async function sendChat(query, originCountry, history, onEvent, signal) {
   const token = getToken();
   if (!token) throw new Error("Not authenticated");
 
   const body = { query, history: history || [] };
-  if (originCountry) {
-    body.origin_country = originCountry;
-  }
+  if (originCountry) body.origin_country = originCountry;
 
   const res = await fetch(`${API_BASE}/agent/chat`, {
     method: "POST",
@@ -154,12 +153,10 @@ export async function sendChat(query, originCountry, history, onEvent, signal) {
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
-
     const lines = buffer.split("\n");
     buffer = lines.pop() || "";
 
     let currentEvent = null;
-
     for (const line of lines) {
       if (line.startsWith("event: ")) {
         currentEvent = line.slice(7).trim();
@@ -167,9 +164,7 @@ export async function sendChat(query, originCountry, history, onEvent, signal) {
         try {
           const data = JSON.parse(line.slice(6));
           onEvent({ type: currentEvent, data });
-        } catch {
-          // skip malformed JSON
-        }
+        } catch { /* skip malformed */ }
         currentEvent = null;
       }
     }

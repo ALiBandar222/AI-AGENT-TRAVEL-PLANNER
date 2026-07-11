@@ -1,10 +1,5 @@
 import { SquarePen, MessageSquare, Trash2, History } from "lucide-react";
-
-function formatDate(iso) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-}
+import { formatDate } from "../../utils/formatters";
 
 export default function Sidebar({
   open,
@@ -34,10 +29,7 @@ export default function Sidebar({
               key={s.id}
               className={`sidebar-item ${s.id === activeId ? "sidebar-item--active" : ""}`}
             >
-              <button
-                className="sidebar-item-body"
-                onClick={() => onSelect(s.id)}
-              >
+              <button className="sidebar-item-body" onClick={() => onSelect(s.id)}>
                 <MessageSquare size={14} className="sidebar-item-icon" />
                 <span className="sidebar-item-title">{s.title}</span>
               </button>

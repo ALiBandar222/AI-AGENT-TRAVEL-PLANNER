@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login, checkBackendHealth } from "../api";
-import { LogIn, AlertTriangle } from "lucide-react";
+import { login } from "../../api";
+import { LogIn } from "lucide-react";
+import BackendWarning from "../common/BackendWarning";
+import { useBackendHealth } from "../../hooks/useBackendHealth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [backendOk, setBackendOk] = useState(true);
-  const [healthStatus, setHealthStatus] = useState(null);
+  const { health, loading: healthLoading } = useBackendHealth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    checkBackendHealth().then((health) => {
-      setBackendOk(health !== null);
-      setHealthStatus(health);
-    });
-  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -42,26 +36,7 @@ export default function LoginPage() {
           <p>Log in to your Travel Planner account</p>
         </div>
 
-        {!backendOk && (
-          <div className="auth-warning">
-            <AlertTriangle size={16} />
-            <span>
-              Backend seems unreachable at http://localhost:8000 — make sure
-              it's running, then try again.
-            </span>
-          </div>
-        )}
-
-        {backendOk && healthStatus?.status === "degraded" && (
-          <div className="auth-warning auth-warning--info">
-            <AlertTriangle size={16} />
-            <span>
-              Backend is running but some services are degraded
-              (ML: {healthStatus.ml_model}, LLM: {healthStatus.llm}).
-              Chat may still work with limited features.
-            </span>
-          </div>
-        )}
+        <BackendWarning health={health} loading={healthLoading} />
 
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
@@ -96,8 +71,7 @@ export default function LoginPage() {
         </form>
 
         <p className="auth-switch">
-          Don't have an account?{" "}
-          <Link to="/signup">Create one</Link>
+          Don&apos;t have an account? <Link to="/signup">Create one</Link>
         </p>
       </div>
     </div>
